@@ -13,7 +13,7 @@ a {text-decoration: none;}
 #user_select { width: 1200px; margin: 0 auto;}
 #user_select .title {padding: 5px 20px; color:#fff; background-color: #6688ee; text-align: center; cursor: pointer;}
 .cities {
-  display: flex; padding: 20px 0 10px; justify-content: center; align-items: flex-start;}
+  display: flex; padding: 20px 0 10px; justify-content: center; align-items: flex-start; flex-wrap:wrap;}
 
 .cities button { 
   border:none; background-color: #edefed;
@@ -37,6 +37,7 @@ a {text-decoration: none;}
 
 
 
+
 #weather {width: 1200px; padding: 20px 0 0; background-color: #ddd; margin: 0 auto;}
 #weather ul {display: flex; justify-content: space-around; align-items: flex-start; 
   flex-wrap: wrap;}
@@ -46,6 +47,7 @@ a {text-decoration: none;}
 }
 #weather ul li .top {
   padding: 20px 0; color:#fff; background-color: #6688ee;
+  background-size: cover; background-position: 50% 50%;
   display: flex; justify-content: space-between;
   align-items: center;
 }
@@ -65,7 +67,6 @@ a {text-decoration: none;}
 @media (max-width:1200px){
   #user_select, #weather {width: 100%;}
 
-
 }
 
 @media (max-width:767px){
@@ -74,4 +75,7 @@ a {text-decoration: none;}
 
 @media (max-width:575px){
   #weather ul li {width: calc(100% - 20px);}
+  .search {width: 320px;}
+
+
 }

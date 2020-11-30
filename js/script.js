@@ -2,9 +2,25 @@ $(document).ready(function(){
 
   var city = []; 
   //사용자가 클릭한 곳의 도시명을 순서대로 넣을 공간 (사용자가 좌측부터 클릭한다는 보장이 없기 때문에 만드는 공간)
+
+  /* 선택이나 또는 검색한 도시명을 최근순으로 보여주고자 할 때, 
+  push ["a"] ===> ["a,b"]
+  shift : 첫번째 인덱스를 제거한다.
+  unshift : 첫번째 자리의 인덱스를 추가한다. 
+  */
   
   var myKey = "03d751fdd37b9b37280c69b514a1a603" // (내 API키)
   var state_icon = ""; // "" => 문자열 데이터란 의미
+  var ch_img; // 시간대에 의한 이미지 파일을 저장한 변수
+
+  var $date = new Date();
+  console.log($date);
+  var $hour = $date.getHours();
+  if($hour >= 6 && $hour<18){ // 낮 구간
+    ch_img = "day.jpg";
+  }else{ // 밤구간
+    ch_img = "night.jpg";
+  }
 
   var w_box = `
   <li>
@@ -13,7 +29,8 @@ $(document).ready(function(){
         <div class="info">
           <p class="temp"><span>10</span>&nbsp;˚C</p>
           <h4>Cloud</h4>
-          <p><span class="city">NewYork</span>,&nbsp;<span class="nation">US</span></p>
+          <p><span class="city">NewYork</span></p>
+          <p><span class="nation">US</span></p>
         </div>
     </div>
     <div class="bottom">
@@ -87,6 +104,8 @@ $(document).ready(function(){
                 state_icon = "wi-dust";
               }
 
+              $("#weather li").find(".top").css("background-image","url(img/" + ch_img +")");
+              
               $("#weather li").eq(index).find(".cur_icon i").addClass(state_icon);
               $("#weather li").eq(index).find(".temp span").text(temp);
               $("#weather li").eq(index).find(".info h4").text(weather);
@@ -101,9 +120,25 @@ $(document).ready(function(){
         });
   };
 
+  // 현재 위치의 주소값을 가져온다. --> openweathermap 의 api와 연동하여 현재 위치의 날씨 정보를 가져온다.
+  /*
+  $.getJSON("외부파일 경로", fucntion(data){
+     실행문-data를 연동
+  })
+  */
+
+  $.getJSON("https://extreme-ip-lookup.com/json", function(data){
+      console.log(data);
+      city.push(data.city);
+      w_info();
+  });
+
+
+
   $(".cities button").click(function(){
     var $city_txt = $(this).text(); // 클릭한 곳의 텍스트를 저장
-    city.push($city_txt);
+    //city.push($city_txt);
+    city.unshift($city_txt);
     console.log(city);
     //$(this).hide();
     $(this).prop("disabled",true);
@@ -120,7 +155,8 @@ $(document).ready(function(){
        var $low_search = $search_val.toLowerCase();
        console.log($low_search);
 
-       city.push($search_val);
+       //city.push($search_val);
+       city.unshift($search_val);
        w_info();
      }
   };
@@ -143,8 +179,6 @@ $(document).ready(function(){
     location.reload();
 
   });
-
-  // "검색창 글씨 빼기"
 
 
 
